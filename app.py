@@ -1,10 +1,8 @@
-#pip install streamlit openai
-
 import streamlit as st
 import openai
 
 # Set up the OpenAI API key
-openai.api_key = "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"
+openai.api_key = "your_openai_api_key_here"
 
 # Define the home page
 def home():
@@ -78,14 +76,18 @@ def study():
                 )
 
 # Create the Streamlit app
-app = st.streamlit_app
-
-# Create the pages
-app.add_page("Home", home)
-app.add_page("Study", study)
-
-# Set the initial selected element
-app.session_state["selected_element"] = "Element 1"
+@st.cache
+def main():
+    st.set_page_config(page_title="My App", page_icon=":guardsman:", layout="wide")
+    st.title("My App")
+    st.sidebar.title("Navigation")
+    st.sidebar.write("Select a page:")
+    page = st.sidebar.radio("", ["Home", "Study"])
+    if page == "Home":
+        home()
+    elif page == "Study":
+        study()
 
 # Run the app
-app.run()
+if __name__ == "__main__":
+    main()
